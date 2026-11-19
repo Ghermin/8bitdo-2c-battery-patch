@@ -1,0 +1,8 @@
+out/
+backups/
+*.bin
+*.dat
+*.log
+*.pdb
+__pycache__/
+.claude/
