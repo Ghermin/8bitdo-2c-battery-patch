@@ -73,6 +73,12 @@ namespace BatteryPatch
             for (int o = 0; o < length; o += Chunk)
             {
                 byte[] part = Read(dev, addr + o, Math.Min(Chunk, length - o));
+                for (int retry = 0; part == null && retry < 2; retry++) // un raté passager : on réveille le canal et on redemande
+                {
+                    Thread.Sleep(200);
+                    Identify(dev);
+                    part = Read(dev, addr + o, Math.Min(Chunk, length - o));
+                }
                 if (part == null) { if (label != null) Console.WriteLine(); return null; }
                 Array.Copy(part, 0, result, o, part.Length);
                 if (label != null)
