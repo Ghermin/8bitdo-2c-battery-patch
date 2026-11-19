@@ -9,7 +9,8 @@ firmware never sends it to the PC. This tool patches the controller and the dong
 - Small patch: 9 bytes on the controller, 34 bytes on the dongle. Everything else is 8BitDo's official firmware.
 - One program, a menu, no install. It backs up your devices first and can put them back to the original firmware.
 - No 8BitDo firmware is shipped here: the tool downloads the official one from 8BitDo's own update server and checks it.
-- Apps that read it: [Jus](https://github.com/Ghermin/jus) (taskbar battery levels). For other apps, see [Reading the level](#reading-the-level).
+- Apps that read it: [Jus](https://github.com/Ghermin/jus) (taskbar battery levels), which also offers to apply this patch
+  itself in one click. For other apps, see [Reading the level](#reading-the-level).
 
 > **Unofficial.** Not made or supported by 8BitDo. Writing firmware always carries a risk; the tool is careful (see
 > [Safety](#safety)), but you use it at your own risk.
@@ -75,7 +76,8 @@ battery level:
 - Bytes `[6..7]` = `1C 30` (dongle), **byte `[8]` = battery %**, **byte `[9]` = `0xBA`** (signature: no signature, no level).
   Indexes include the report ID `0x02`.
 
-Asking every 20–60 s is plenty. Details, packet format and
+Ask twice in a row and accept the level only if both replies are signed: with a patched dongle and a stock
+controller, byte 9 carries a checksum byte that can equal `0xBA` by chance. Asking every 20–60 s is plenty. Details, packet format and
 disassembly notes: [docs/how-it-works.md](docs/how-it-works.md).
 
 ## Build
@@ -100,7 +102,8 @@ donne le **vrai pourcentage de batterie**, lisible par n'importe quelle appli.
 - Petit patch : 9 octets sur la manette, 34 sur le dongle. Tout le reste est le firmware officiel de 8BitDo.
 - Un seul programme, un menu, rien à installer. Il sauvegarde d'abord tes appareils et peut les remettre d'origine.
 - Aucun firmware de 8BitDo n'est fourni ici : l'outil télécharge l'officiel sur le serveur de mise à jour de 8BitDo et le vérifie.
-- Appli qui l'affiche : [Jus](https://github.com/Ghermin/jus) (batteries dans la barre des tâches).
+- Appli qui l'affiche : [Jus](https://github.com/Ghermin/jus) (batteries dans la barre des tâches), qui propose aussi
+  d'installer ce patch en un clic.
 
 > **Non officiel.** Ni fait ni soutenu par 8BitDo. Écrire un firmware comporte toujours un risque ; l'outil est prudent
 > (voir [Safety](#safety)), mais c'est à tes risques.

@@ -93,7 +93,8 @@ ldr r3, =0x842e1c ; ldrb r3, [r3] ; strb r3, [r2, #8]
 bx lr
 ```
 
-With a stock controller, byte 9 is not `0xBA`, so readers show no level rather than a wrong one.
+With a stock controller, bytes 18-19 of its packets are a 16-bit checksum, so byte 9 is almost never `0xBA`, but it can
+be by chance: readers should require two signed replies in a row before showing a level.
 
 ## Known SHA-256
 
